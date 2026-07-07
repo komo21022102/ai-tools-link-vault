@@ -271,6 +271,49 @@
       display: none;
     }
 
+    .sync-box {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+      padding: 14px;
+      background: #f0ebe0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .sync-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .sync-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .sync-status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 999px;
+    }
+
+    .sync-status.online::before {
+      background: var(--green);
+    }
+
+    .sync-status.error::before {
+      background: var(--coral);
+    }
+
     .category-editor {
       margin-top: 18px;
       padding-top: 17px;
@@ -738,6 +781,21 @@
           <input class="import-input" id="importFile" type="file" accept="application/json">
         </div>
 
+        <div class="sync-box">
+          <div class="sync-head">
+            <h2>Google Sheet 同步</h2>
+            <span class="sync-status" id="syncStatus">未設定</span>
+          </div>
+          <label>
+            Apps Script Web App URL
+            <input id="scriptUrlInput" type="url" placeholder="https://script.google.com/macros/s/.../exec">
+          </label>
+          <div class="utility-row" style="margin-top: 0;">
+            <button class="ghost" type="button" id="saveScriptUrlBtn"><i data-lucide="save"></i>儲存</button>
+            <button class="ghost" type="button" id="syncNowBtn"><i data-lucide="refresh-cw"></i>同步</button>
+          </div>
+        </div>
+
         <div class="category-editor">
           <h2>分類管理</h2>
           <div class="row" style="margin-top: 12px;">
@@ -781,39 +839,14 @@
   <script>
     const STORE_KEY = "link-vault-items-v1";
     const CATEGORY_KEY = "link-vault-categories-v1";
+    const SCRIPT_URL_KEY = "link-vault-apps-script-url-v1";
+    const SHEET_ID = "1robxjndv0LbaLMc2-OPVhkSFmr9tY3yLkfYHoKNJP6g";
+    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
     const defaultCategories = ["AI資訊", "美食", "生活", "學習"];
-    const sampleItems = [
-      {
-        id: crypto.randomUUID(),
-        url: "https://openai.com/news/",
-        title: "OpenAI 最新消息",
-        category: "AI資訊",
-        note: "集中保存 AI 產品、模型與研究更新。",
-        thumb: "",
-        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString()
-      },
-      {
-        id: crypto.randomUUID(),
-        url: "https://www.timeout.com/taipei/restaurants",
-        title: "台北餐廳靈感",
-        category: "美食",
-        note: "週末找餐廳時可以回來翻。",
-        thumb: "",
-        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString()
-      },
-      {
-        id: crypto.randomUUID(),
-        url: "https://developer.mozilla.org/",
-        title: "MDN Web Docs",
-        category: "學習",
-        note: "前端語法、API 和瀏覽器相容性查詢。",
-        thumb: "",
-        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 78).toISOString()
-      }
-    ];
 
-    let items = loadJson(STORE_KEY, sampleItems);
+    let items = loadJson(STORE_KEY, []);
     let categories = loadJson(CATEGORY_KEY, defaultCategories);
+    let scriptUrl = localStorage.getItem(SCRIPT_URL_KEY) || "";
     let activeCategory = "全部";
     let sortDirection = "desc";
 
@@ -833,6 +866,8 @@
       cards: $("#cards"),
       filters: $("#filters"),
       categoryList: $("#categoryList"),
+      scriptUrl: $("#scriptUrlInput"),
+      syncStatus: $("#syncStatus"),
       search: $("#searchInput"),
       viewNote: $("#viewNote"),
       empty: $("#emptyState"),
@@ -851,6 +886,112 @@
     function save() {
       localStorage.setItem(STORE_KEY, JSON.stringify(items));
       localStorage.setItem(CATEGORY_KEY, JSON.stringify(categories));
+    }
+
+    function setSyncStatus(message, state = "") {
+      elements.syncStatus.textContent = message;
+      elements.syncStatus.className = `sync-status ${state}`.trim();
+    }
+
+    function csvToRows(text) {
+      const rows = [];
+      let row = [];
+      let value = "";
+      let quoted = false;
+      for (let i = 0; i < text.length; i += 1) {
+        const char = text[i];
+        const next = text[i + 1];
+        if (char === '"' && quoted && next === '"') {
+          value += '"';
+          i += 1;
+        } else if (char === '"') {
+          quoted = !quoted;
+        } else if (char === "," && !quoted) {
+          row.push(value);
+          value = "";
+        } else if ((char === "\n" || char === "\r") && !quoted) {
+          if (char === "\r" && next === "\n") i += 1;
+          row.push(value);
+          if (row.some((cell) => cell !== "")) rows.push(row);
+          row = [];
+          value = "";
+        } else {
+          value += char;
+        }
+      }
+      row.push(value);
+      if (row.some((cell) => cell !== "")) rows.push(row);
+      return rows;
+    }
+
+    function normalizeSheetRow(row, index) {
+      const id = row.ID || row.id || row.Id || crypto.randomUUID();
+      const url = normalizeUrl(row.URL || row.url || "");
+      if (!url) return null;
+      return {
+        id,
+        createdAt: row["Created At"] || row.createdAt || row.created || new Date().toISOString(),
+        updatedAt: row["Updated At"] || row.updatedAt || "",
+        title: row.Title || row.title || safeHost(url) || `連結 ${index + 1}`,
+        url,
+        category: row.Category || row.category || "AI資訊",
+        note: row.Note || row.note || "",
+        thumb: row.Thumbnail || row.thumbnail || row.thumb || "",
+        host: row.Host || row.host || safeHost(url)
+      };
+    }
+
+    async function loadFromSheet() {
+      setSyncStatus("讀取中", "");
+      try {
+        const response = await fetch(`${CSV_URL}&cacheBust=${Date.now()}`);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const rows = csvToRows(await response.text());
+        if (!rows.length) {
+          setSyncStatus(scriptUrl ? "已連線" : "未設定", scriptUrl ? "online" : "");
+          renderAll();
+          return;
+        }
+        const headers = rows[0].map((header) => header.trim());
+        const nextItems = rows.slice(1)
+          .map((row, index) => Object.fromEntries(headers.map((header, column) => [header, row[column] || ""])))
+          .map(normalizeSheetRow)
+          .filter(Boolean);
+        if (nextItems.length) {
+          items = nextItems;
+          categories = Array.from(new Set([...defaultCategories, ...items.map((item) => item.category).filter(Boolean)]));
+          save();
+        }
+        setSyncStatus(scriptUrl ? "已連線" : "未設定", scriptUrl ? "online" : "");
+        renderAll();
+      } catch (error) {
+        setSyncStatus("讀取失敗", "error");
+        showToast("讀取 Google Sheet 失敗，先顯示本機資料");
+        renderAll();
+      }
+    }
+
+    async function writeToSheet(action, item) {
+      if (!scriptUrl) {
+        setSyncStatus("未設定", "");
+        showToast("尚未設定 Apps Script URL，已先存到本機");
+        return false;
+      }
+      setSyncStatus("同步中", "");
+      try {
+        await fetch(scriptUrl, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action, item })
+        });
+        setSyncStatus("已同步", "online");
+        return true;
+      } catch (error) {
+        setSyncStatus("同步失敗", "error");
+        showToast("同步到 Google Sheet 失敗，資料已保留在本機");
+        return false;
+      }
     }
 
     function normalizeUrl(value) {
@@ -993,29 +1134,33 @@
       elements.category.value = categories[0] || "AI資訊";
     }
 
-    elements.form.addEventListener("submit", (event) => {
+    elements.form.addEventListener("submit", async (event) => {
       event.preventDefault();
       const url = normalizeUrl(elements.url.value);
       const title = elements.title.value.trim() || safeHost(url);
+      const id = elements.editId.value || crypto.randomUUID();
       const payload = {
+        id,
         url,
         title,
         category: elements.category.value,
         note: elements.note.value.trim(),
         thumb: elements.thumb.value.trim(),
-        createdAt: new Date(elements.date.value || Date.now()).toISOString()
+        createdAt: new Date(elements.date.value || Date.now()).toISOString(),
+        updatedAt: new Date().toISOString(),
+        host: safeHost(url)
       };
-      const id = elements.editId.value;
-      if (id) {
+      if (elements.editId.value) {
         items = items.map((item) => item.id === id ? { ...item, ...payload } : item);
         showToast("連結已更新");
       } else {
-        items.unshift({ id: crypto.randomUUID(), ...payload });
+        items.unshift(payload);
         showToast("連結已加入收藏");
       }
       save();
-      resetForm();
       renderAll();
+      await writeToSheet("upsert", payload);
+      resetForm();
     });
 
     elements.cards.addEventListener("click", (event) => {
@@ -1042,6 +1187,7 @@
         items = items.filter((entry) => entry.id !== item.id);
         save();
         renderAll();
+        writeToSheet("delete", item);
         showToast("連結已刪除");
       }
     });
@@ -1087,6 +1233,15 @@
       showToast("分類已新增");
     });
 
+    $("#saveScriptUrlBtn").addEventListener("click", () => {
+      scriptUrl = elements.scriptUrl.value.trim();
+      localStorage.setItem(SCRIPT_URL_KEY, scriptUrl);
+      setSyncStatus(scriptUrl ? "已設定" : "未設定", scriptUrl ? "online" : "");
+      showToast(scriptUrl ? "Apps Script URL 已儲存" : "已清除同步設定");
+    });
+
+    $("#syncNowBtn").addEventListener("click", loadFromSheet);
+
     elements.categoryList.addEventListener("click", (event) => {
       const button = event.target.closest("[data-remove-category]");
       if (!button) return;
@@ -1131,9 +1286,11 @@
       }
     });
 
+    elements.scriptUrl.value = scriptUrl;
     if (!categories.length) categories = [...defaultCategories];
     resetForm();
     renderAll();
+    loadFromSheet();
   </script>
 </body>
 </html>
