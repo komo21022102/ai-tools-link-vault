@@ -1,0 +1,1139 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Link Vault 資訊連結存檔</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23113f32'/%3E%3Cpath d='M18 17h28v30H18z' fill='%23fffcf4'/%3E%3Cpath d='M23 24h18M23 32h18M23 40h11' stroke='%23256a4f' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+TC:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,650&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --ink: #17201f;
+      --muted: #65706d;
+      --line: #d7ded7;
+      --paper: #f7f4ec;
+      --surface: #fffcf4;
+      --green: #256a4f;
+      --green-deep: #113f32;
+      --coral: #da654d;
+      --blue: #2d668f;
+      --gold: #b88720;
+      --shadow: 0 18px 50px rgba(28, 35, 31, .12);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(23, 32, 31, .045) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(0deg, rgba(23, 32, 31, .035) 1px, transparent 1px) 0 0 / 42px 42px,
+        radial-gradient(circle at 18% 12%, rgba(218, 101, 77, .16), transparent 28%),
+        radial-gradient(circle at 86% 8%, rgba(45, 102, 143, .13), transparent 24%),
+        var(--paper);
+      font-family: "IBM Plex Sans TC", ui-sans-serif, sans-serif;
+      letter-spacing: 0;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      width: min(1440px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 48px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) minmax(340px, 520px);
+      gap: 24px;
+      align-items: end;
+      padding: 18px 0 22px;
+      border-bottom: 1px solid rgba(23, 32, 31, .18);
+    }
+
+    .brand {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 54px;
+      height: 54px;
+      place-items: center;
+      color: #fff;
+      background: var(--green-deep);
+      border: 1px solid rgba(255, 255, 255, .45);
+      border-radius: var(--radius);
+      box-shadow: 8px 8px 0 rgba(218, 101, 77, .24);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(36px, 5vw, 72px);
+      line-height: .9;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      max-width: 650px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      overflow: hidden;
+      background: rgba(255, 252, 244, .78);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .stat {
+      min-width: 0;
+      padding: 18px;
+      border-right: 1px solid var(--line);
+    }
+
+    .stat:last-child {
+      border-right: 0;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 26px;
+      line-height: 1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 365px minmax(0, 1fr);
+      gap: 22px;
+      margin-top: 22px;
+      align-items: start;
+    }
+
+    .panel,
+    .toolbar {
+      background: rgba(255, 252, 244, .86);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .panel {
+      position: sticky;
+      top: 18px;
+      padding: 18px;
+    }
+
+    .panel h2,
+    .library-head h2 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-width: 0;
+      color: var(--ink);
+      background: #fffdf7;
+      border: 1px solid #cbd4cc;
+      border-radius: var(--radius);
+      outline: 0;
+      transition: border .16s ease, box-shadow .16s ease, background .16s ease;
+    }
+
+    input,
+    select {
+      height: 44px;
+      padding: 0 12px;
+    }
+
+    textarea {
+      min-height: 86px;
+      padding: 11px 12px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      background: #fff;
+      border-color: var(--green);
+      box-shadow: 0 0 0 4px rgba(37, 106, 79, .12);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .primary,
+    .ghost,
+    .icon-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 42px;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      font-weight: 700;
+      transition: transform .16s ease, background .16s ease, border .16s ease;
+    }
+
+    .primary {
+      width: 100%;
+      color: #fff;
+      background: var(--green-deep);
+      box-shadow: 0 8px 0 rgba(17, 63, 50, .18);
+    }
+
+    .primary:hover,
+    .ghost:hover,
+    .icon-button:hover {
+      transform: translateY(-1px);
+    }
+
+    .ghost,
+    .icon-button {
+      color: var(--ink);
+      background: #fffdf7;
+      border-color: var(--line);
+    }
+
+    .utility-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .import-input {
+      display: none;
+    }
+
+    .category-editor {
+      margin-top: 18px;
+      padding-top: 17px;
+      border-top: 1px solid var(--line);
+    }
+
+    .category-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      max-width: 100%;
+      padding: 7px 9px;
+      color: var(--ink);
+      background: #fffdf7;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tag button {
+      display: grid;
+      width: 18px;
+      height: 18px;
+      place-items: center;
+      padding: 0;
+      color: var(--muted);
+      background: transparent;
+      border: 0;
+    }
+
+    .library {
+      min-width: 0;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(180px, 1fr) auto auto;
+      gap: 12px;
+      align-items: center;
+      padding: 14px;
+    }
+
+    .search-wrap {
+      position: relative;
+    }
+
+    .search-wrap i {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      width: 18px;
+      height: 18px;
+      color: var(--muted);
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .search-wrap input {
+      padding-left: 40px;
+    }
+
+    .segmented {
+      display: inline-grid;
+      grid-auto-flow: column;
+      padding: 4px;
+      background: #ece7dc;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .segmented button {
+      min-width: 90px;
+      height: 34px;
+      padding: 0 10px;
+      color: var(--muted);
+      background: transparent;
+      border: 0;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .segmented button.active {
+      color: #fff;
+      background: var(--green-deep);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 18px 2px 14px;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 36px;
+      padding: 0 12px;
+      color: var(--ink);
+      background: rgba(255, 252, 244, .7);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .filter-chip.active {
+      color: #fff;
+      background: var(--green);
+      border-color: var(--green);
+    }
+
+    .count-dot {
+      display: grid;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 6px;
+      place-items: center;
+      color: inherit;
+      background: rgba(255, 255, 255, .22);
+      border: 1px solid rgba(23, 32, 31, .12);
+      border-radius: 999px;
+      font-size: 11px;
+    }
+
+    .library-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 4px 0 12px;
+    }
+
+    .view-note {
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .link-card {
+      display: grid;
+      min-width: 0;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(28, 35, 31, .08);
+      transition: transform .18s ease, box-shadow .18s ease, border .18s ease;
+    }
+
+    .link-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(37, 106, 79, .48);
+      box-shadow: 0 18px 40px rgba(28, 35, 31, .12);
+    }
+
+    .thumb {
+      position: relative;
+      aspect-ratio: 1.55;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(37, 106, 79, .16), rgba(218, 101, 77, .13)), #ebe5d7;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      background: #eee7d9;
+    }
+
+    .thumb-fallback {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      text-align: center;
+      color: var(--green-deep);
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .card-body {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .category-pill {
+      max-width: 65%;
+      overflow: hidden;
+      color: #fff;
+      background: var(--blue);
+      border-radius: 999px;
+      padding: 5px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .date {
+      color: var(--muted);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .card-title {
+      display: -webkit-box;
+      min-height: 52px;
+      margin: 0;
+      overflow: hidden;
+      font-size: 18px;
+      line-height: 1.42;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .desc {
+      display: -webkit-box;
+      min-height: 40px;
+      margin: 0;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .url-line {
+      overflow: hidden;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 42px 42px;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 0;
+      min-height: 40px;
+      padding: 0 10px;
+      color: #fff;
+      background: var(--green-deep);
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .icon-button {
+      width: 42px;
+      height: 40px;
+      min-height: 40px;
+      padding: 0;
+    }
+
+    .empty {
+      display: none;
+      padding: 56px 24px;
+      text-align: center;
+      background: rgba(255, 252, 244, .72);
+      border: 1px dashed #bfc8c0;
+      border-radius: var(--radius);
+    }
+
+    .empty.show {
+      display: block;
+    }
+
+    .empty strong {
+      display: block;
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .empty span {
+      display: block;
+      margin-top: 12px;
+      color: var(--muted);
+    }
+
+    .toast {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 10;
+      max-width: min(420px, calc(100vw - 44px));
+      padding: 13px 15px;
+      color: #fff;
+      background: var(--green-deep);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .2s ease, transform .2s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1120px) {
+      .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 880px) {
+      .app {
+        width: min(100% - 22px, 760px);
+        padding-top: 14px;
+      }
+
+      .topbar,
+      .workspace,
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        position: static;
+      }
+
+      .toolbar {
+        gap: 10px;
+      }
+
+      .segmented {
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .brand {
+        align-items: flex-start;
+      }
+
+      .brand-mark {
+        width: 46px;
+        height: 46px;
+      }
+
+      .stats,
+      .row,
+      .utility-row {
+        grid-template-columns: 1fr;
+      }
+
+      .stat {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .stat:last-child {
+        border-bottom: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="topbar">
+      <div>
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true"><i data-lucide="archive"></i></div>
+          <div>
+            <h1>Link Vault</h1>
+            <p class="subtitle">把 AI 資訊、美食口袋名單、生活靈感和學習資料收在同一個地方。依新增時間排序，也能用分類快速翻找。</p>
+          </div>
+        </div>
+      </div>
+      <div class="stats" aria-label="資料統計">
+        <div class="stat"><strong id="statTotal">0</strong><span>已收藏連結</span></div>
+        <div class="stat"><strong id="statCategory">0</strong><span>目前分類數</span></div>
+        <div class="stat"><strong id="statLatest">--</strong><span>最後新增</span></div>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <aside class="panel">
+        <h2 id="formTitle">新增資訊連結</h2>
+        <form class="form-grid" id="linkForm">
+          <input type="hidden" id="editId">
+          <label>
+            連結網址
+            <input id="urlInput" type="url" placeholder="https://example.com/article" required>
+          </label>
+          <label>
+            標題
+            <input id="titleInput" type="text" placeholder="例如：OpenAI 新工具整理">
+          </label>
+          <div class="row">
+            <label>
+              分類
+              <select id="categoryInput"></select>
+            </label>
+            <label>
+              新增時間
+              <input id="dateInput" type="datetime-local">
+            </label>
+          </div>
+          <label>
+            縮圖網址
+            <input id="thumbInput" type="url" placeholder="可留空，自動抓網站截圖">
+          </label>
+          <label>
+            備註
+            <textarea id="noteInput" placeholder="寫下你為什麼想保存這個連結"></textarea>
+          </label>
+          <button class="primary" type="submit"><i data-lucide="plus"></i><span id="submitLabel">加入收藏</span></button>
+          <button class="ghost" type="button" id="cancelEdit" hidden><i data-lucide="x"></i>取消編輯</button>
+        </form>
+
+        <div class="utility-row">
+          <button class="ghost" type="button" id="exportBtn"><i data-lucide="download"></i>匯出</button>
+          <label class="ghost" for="importFile"><i data-lucide="upload"></i>匯入</label>
+          <input class="import-input" id="importFile" type="file" accept="application/json">
+        </div>
+
+        <div class="category-editor">
+          <h2>分類管理</h2>
+          <div class="row" style="margin-top: 12px;">
+            <input id="newCategoryInput" type="text" placeholder="新增分類名稱">
+            <button class="ghost" type="button" id="addCategoryBtn"><i data-lucide="folder-plus"></i>新增</button>
+          </div>
+          <div class="category-list" id="categoryList"></div>
+        </div>
+      </aside>
+
+      <section class="library">
+        <div class="toolbar">
+          <div class="search-wrap">
+            <i data-lucide="search"></i>
+            <input id="searchInput" type="search" placeholder="搜尋標題、網址或備註">
+          </div>
+          <div class="segmented" aria-label="時間排序">
+            <button type="button" class="active" data-sort="desc">最新優先</button>
+            <button type="button" data-sort="asc">最舊優先</button>
+          </div>
+          <button class="ghost" type="button" id="clearFilters"><i data-lucide="rotate-ccw"></i>重置</button>
+        </div>
+
+        <div class="filters" id="filters"></div>
+
+        <div class="library-head">
+          <h2>連結資料庫</h2>
+          <span class="view-note" id="viewNote">顯示 0 筆</span>
+        </div>
+        <div class="cards" id="cards"></div>
+        <div class="empty" id="emptyState">
+          <strong>還沒有符合條件的連結</strong>
+          <span>新增一個網址，或切換分類和搜尋條件。</span>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const STORE_KEY = "link-vault-items-v1";
+    const CATEGORY_KEY = "link-vault-categories-v1";
+    const defaultCategories = ["AI資訊", "美食", "生活", "學習"];
+    const sampleItems = [
+      {
+        id: crypto.randomUUID(),
+        url: "https://openai.com/news/",
+        title: "OpenAI 最新消息",
+        category: "AI資訊",
+        note: "集中保存 AI 產品、模型與研究更新。",
+        thumb: "",
+        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString()
+      },
+      {
+        id: crypto.randomUUID(),
+        url: "https://www.timeout.com/taipei/restaurants",
+        title: "台北餐廳靈感",
+        category: "美食",
+        note: "週末找餐廳時可以回來翻。",
+        thumb: "",
+        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString()
+      },
+      {
+        id: crypto.randomUUID(),
+        url: "https://developer.mozilla.org/",
+        title: "MDN Web Docs",
+        category: "學習",
+        note: "前端語法、API 和瀏覽器相容性查詢。",
+        thumb: "",
+        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 78).toISOString()
+      }
+    ];
+
+    let items = loadJson(STORE_KEY, sampleItems);
+    let categories = loadJson(CATEGORY_KEY, defaultCategories);
+    let activeCategory = "全部";
+    let sortDirection = "desc";
+
+    const $ = (selector) => document.querySelector(selector);
+    const elements = {
+      form: $("#linkForm"),
+      editId: $("#editId"),
+      formTitle: $("#formTitle"),
+      submitLabel: $("#submitLabel"),
+      cancelEdit: $("#cancelEdit"),
+      url: $("#urlInput"),
+      title: $("#titleInput"),
+      category: $("#categoryInput"),
+      date: $("#dateInput"),
+      thumb: $("#thumbInput"),
+      note: $("#noteInput"),
+      cards: $("#cards"),
+      filters: $("#filters"),
+      categoryList: $("#categoryList"),
+      search: $("#searchInput"),
+      viewNote: $("#viewNote"),
+      empty: $("#emptyState"),
+      toast: $("#toast")
+    };
+
+    function loadJson(key, fallback) {
+      try {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : fallback;
+      } catch (error) {
+        return fallback;
+      }
+    }
+
+    function save() {
+      localStorage.setItem(STORE_KEY, JSON.stringify(items));
+      localStorage.setItem(CATEGORY_KEY, JSON.stringify(categories));
+    }
+
+    function normalizeUrl(value) {
+      const trimmed = value.trim();
+      if (!trimmed) return "";
+      return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+    }
+
+    function safeHost(url) {
+      try {
+        return new URL(url).hostname.replace(/^www\./, "");
+      } catch (error) {
+        return url;
+      }
+    }
+
+    function thumbnailFor(item) {
+      if (item.thumb) return item.thumb;
+      return `https://image.thum.io/get/width/900/crop/580/noanimate/${encodeURIComponent(item.url)}`;
+    }
+
+    function initials(text) {
+      return (text || "LINK").trim().slice(0, 2).toUpperCase();
+    }
+
+    function formatDate(value) {
+      return new Intl.DateTimeFormat("zh-TW", {
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      }).format(new Date(value));
+    }
+
+    function toLocalInputValue(date) {
+      const d = date ? new Date(date) : new Date();
+      const offset = d.getTimezoneOffset();
+      return new Date(d.getTime() - offset * 60000).toISOString().slice(0, 16);
+    }
+
+    function showToast(message) {
+      elements.toast.textContent = message;
+      elements.toast.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => elements.toast.classList.remove("show"), 2200);
+    }
+
+    function renderCategoryInputs() {
+      elements.category.innerHTML = categories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("");
+      elements.categoryList.innerHTML = categories.map((category) => `
+        <span class="tag">${escapeHtml(category)}<button type="button" title="刪除分類" data-remove-category="${escapeHtml(category)}"><i data-lucide="x"></i></button></span>
+      `).join("");
+      lucide.createIcons();
+    }
+
+    function renderFilters() {
+      const counts = items.reduce((acc, item) => {
+        acc[item.category] = (acc[item.category] || 0) + 1;
+        return acc;
+      }, {});
+      const all = [{ name: "全部", count: items.length }, ...categories.map((name) => ({ name, count: counts[name] || 0 }))];
+      elements.filters.innerHTML = all.map(({ name, count }) => `
+        <button class="filter-chip ${activeCategory === name ? "active" : ""}" type="button" data-filter="${escapeHtml(name)}">
+          ${escapeHtml(name)}<span class="count-dot">${count}</span>
+        </button>
+      `).join("");
+    }
+
+    function filteredItems() {
+      const keyword = elements.search.value.trim().toLowerCase();
+      return items
+        .filter((item) => activeCategory === "全部" || item.category === activeCategory)
+        .filter((item) => {
+          if (!keyword) return true;
+          return [item.title, item.url, item.note, item.category, safeHost(item.url)]
+            .join(" ")
+            .toLowerCase()
+            .includes(keyword);
+        })
+        .sort((a, b) => {
+          const diff = new Date(a.createdAt) - new Date(b.createdAt);
+          return sortDirection === "asc" ? diff : -diff;
+        });
+    }
+
+    function renderCards() {
+      const visible = filteredItems();
+      elements.cards.innerHTML = visible.map((item) => `
+        <article class="link-card">
+          <div class="thumb">
+            <div class="thumb-fallback">${initials(item.title || safeHost(item.url))}</div>
+            <img src="${thumbnailFor(item)}" alt="${item.title || safeHost(item.url)} 的縮圖" loading="lazy" onerror="this.style.display='none'">
+          </div>
+          <div class="card-body">
+            <div class="meta">
+              <span class="category-pill">${escapeHtml(item.category)}</span>
+              <span class="date">${formatDate(item.createdAt)}</span>
+            </div>
+            <h3 class="card-title">${escapeHtml(item.title || safeHost(item.url))}</h3>
+            <p class="desc">${escapeHtml(item.note || "尚未加入備註。")}</p>
+            <div class="url-line">${escapeHtml(safeHost(item.url))}</div>
+            <div class="actions">
+              <a href="${item.url}" target="_blank" rel="noreferrer"><i data-lucide="external-link"></i>開啟連結</a>
+              <button class="icon-button" type="button" title="編輯" data-edit="${item.id}"><i data-lucide="pencil"></i></button>
+              <button class="icon-button" type="button" title="刪除" data-delete="${item.id}"><i data-lucide="trash-2"></i></button>
+            </div>
+          </div>
+        </article>
+      `).join("");
+      elements.empty.classList.toggle("show", visible.length === 0);
+      elements.viewNote.textContent = `顯示 ${visible.length} 筆`;
+      $("#statTotal").textContent = items.length;
+      $("#statCategory").textContent = categories.length;
+      $("#statLatest").textContent = items.length ? formatDate(Math.max(...items.map((item) => new Date(item.createdAt)))) : "--";
+      lucide.createIcons();
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function renderAll() {
+      renderCategoryInputs();
+      renderFilters();
+      renderCards();
+    }
+
+    function resetForm() {
+      elements.form.reset();
+      elements.editId.value = "";
+      elements.date.value = toLocalInputValue();
+      elements.formTitle.textContent = "新增資訊連結";
+      elements.submitLabel.textContent = "加入收藏";
+      elements.cancelEdit.hidden = true;
+      elements.category.value = categories[0] || "AI資訊";
+    }
+
+    elements.form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const url = normalizeUrl(elements.url.value);
+      const title = elements.title.value.trim() || safeHost(url);
+      const payload = {
+        url,
+        title,
+        category: elements.category.value,
+        note: elements.note.value.trim(),
+        thumb: elements.thumb.value.trim(),
+        createdAt: new Date(elements.date.value || Date.now()).toISOString()
+      };
+      const id = elements.editId.value;
+      if (id) {
+        items = items.map((item) => item.id === id ? { ...item, ...payload } : item);
+        showToast("連結已更新");
+      } else {
+        items.unshift({ id: crypto.randomUUID(), ...payload });
+        showToast("連結已加入收藏");
+      }
+      save();
+      resetForm();
+      renderAll();
+    });
+
+    elements.cards.addEventListener("click", (event) => {
+      const editButton = event.target.closest("[data-edit]");
+      const deleteButton = event.target.closest("[data-delete]");
+      if (editButton) {
+        const item = items.find((entry) => entry.id === editButton.dataset.edit);
+        if (!item) return;
+        elements.editId.value = item.id;
+        elements.url.value = item.url;
+        elements.title.value = item.title;
+        elements.category.value = item.category;
+        elements.date.value = toLocalInputValue(item.createdAt);
+        elements.thumb.value = item.thumb || "";
+        elements.note.value = item.note || "";
+        elements.formTitle.textContent = "編輯資訊連結";
+        elements.submitLabel.textContent = "儲存修改";
+        elements.cancelEdit.hidden = false;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      if (deleteButton) {
+        const item = items.find((entry) => entry.id === deleteButton.dataset.delete);
+        if (!item || !confirm(`刪除「${item.title}」？`)) return;
+        items = items.filter((entry) => entry.id !== item.id);
+        save();
+        renderAll();
+        showToast("連結已刪除");
+      }
+    });
+
+    elements.filters.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-filter]");
+      if (!button) return;
+      activeCategory = button.dataset.filter;
+      renderAll();
+    });
+
+    document.querySelector(".segmented").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-sort]");
+      if (!button) return;
+      sortDirection = button.dataset.sort;
+      document.querySelectorAll("[data-sort]").forEach((item) => item.classList.toggle("active", item === button));
+      renderCards();
+    });
+
+    elements.search.addEventListener("input", renderCards);
+    elements.cancelEdit.addEventListener("click", resetForm);
+
+    $("#clearFilters").addEventListener("click", () => {
+      activeCategory = "全部";
+      elements.search.value = "";
+      sortDirection = "desc";
+      document.querySelectorAll("[data-sort]").forEach((button) => button.classList.toggle("active", button.dataset.sort === "desc"));
+      renderAll();
+    });
+
+    $("#addCategoryBtn").addEventListener("click", () => {
+      const input = $("#newCategoryInput");
+      const name = input.value.trim();
+      if (!name) return;
+      if (categories.includes(name)) {
+        showToast("這個分類已經存在");
+        return;
+      }
+      categories.push(name);
+      input.value = "";
+      save();
+      renderAll();
+      showToast("分類已新增");
+    });
+
+    elements.categoryList.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-remove-category]");
+      if (!button) return;
+      const name = button.dataset.removeCategory;
+      if (items.some((item) => item.category === name)) {
+        showToast("這個分類仍有連結，請先改分類或刪除連結");
+        return;
+      }
+      categories = categories.filter((category) => category !== name);
+      save();
+      renderAll();
+      resetForm();
+    });
+
+    $("#exportBtn").addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify({ items, categories }, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `link-vault-${new Date().toISOString().slice(0, 10)}.json`;
+      anchor.click();
+      URL.revokeObjectURL(url);
+      showToast("資料已匯出");
+    });
+
+    $("#importFile").addEventListener("change", async (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+      try {
+        const data = JSON.parse(await file.text());
+        if (!Array.isArray(data.items) || !Array.isArray(data.categories)) throw new Error("Invalid file");
+        items = data.items;
+        categories = data.categories;
+        save();
+        resetForm();
+        renderAll();
+        showToast("資料已匯入");
+      } catch (error) {
+        showToast("匯入失敗，請確認 JSON 格式");
+      } finally {
+        event.target.value = "";
+      }
+    });
+
+    if (!categories.length) categories = [...defaultCategories];
+    resetForm();
+    renderAll();
+  </script>
+</body>
+</html>
