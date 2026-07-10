@@ -3,25 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Link Vault 資訊連結存檔</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23113f32'/%3E%3Cpath d='M18 17h28v30H18z' fill='%23fffcf4'/%3E%3Cpath d='M23 24h18M23 32h18M23 40h11' stroke='%23256a4f' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+TC:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,650&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <title>Lemon water Lin | Visual Design Portfolio</title>
+  <meta name="description" content="Lemon water Lin 的視覺設計作品集，收錄主視覺插畫、海報設計、商品銷售頁與品牌視覺作品。">
+  <meta property="og:title" content="Lemon water Lin | Visual Design Portfolio">
+  <meta property="og:description" content="留心觀察一切生活細微小事，靈感來自那裏。">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#1d2f32">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d2f32'/%3E%3Ccircle cx='24' cy='25' r='11' fill='%23ffd86b'/%3E%3Cpath d='M18 43c10-12 22-13 31-5' fill='none' stroke='%23f8f3ea' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
   <style>
     :root {
-      --ink: #17201f;
-      --muted: #65706d;
-      --line: #d7ded7;
-      --paper: #f7f4ec;
-      --surface: #fffcf4;
-      --green: #256a4f;
-      --green-deep: #113f32;
-      --coral: #da654d;
-      --blue: #2d668f;
-      --gold: #b88720;
-      --shadow: 0 18px 50px rgba(28, 35, 31, .12);
+      --paper: #f8f3ea;
+      --ink: #1d2f32;
+      --muted: #66716c;
+      --line: #d7d8cc;
+      --surface: #fffdf7;
+      --leaf: #6b9b7c;
+      --sun: #ffd86b;
+      --coral: #ef725c;
+      --sky: #a7cdda;
+      --deep: #0f2023;
+      --shadow: 0 24px 80px rgba(29, 47, 50, .14);
       --radius: 8px;
     }
 
@@ -29,98 +30,246 @@
       box-sizing: border-box;
     }
 
-    [hidden] {
-      display: none !important;
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
-      min-height: 100vh;
       color: var(--ink);
       background:
-        linear-gradient(90deg, rgba(23, 32, 31, .045) 1px, transparent 1px) 0 0 / 42px 42px,
-        linear-gradient(0deg, rgba(23, 32, 31, .035) 1px, transparent 1px) 0 0 / 42px 42px,
-        radial-gradient(circle at 18% 12%, rgba(218, 101, 77, .16), transparent 28%),
-        radial-gradient(circle at 86% 8%, rgba(45, 102, 143, .13), transparent 24%),
+        linear-gradient(90deg, rgba(29, 47, 50, .045) 1px, transparent 1px) 0 0 / 38px 38px,
+        linear-gradient(0deg, rgba(29, 47, 50, .035) 1px, transparent 1px) 0 0 / 38px 38px,
         var(--paper);
-      font-family: "IBM Plex Sans TC", ui-sans-serif, sans-serif;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
       letter-spacing: 0;
     }
 
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    button {
-      cursor: pointer;
-    }
-
-    .app {
-      width: min(1440px, calc(100vw - 32px));
+    .shell {
+      width: min(1180px, calc(100vw - 36px));
       margin: 0 auto;
-      padding: 28px 0 48px;
     }
 
     .topbar {
-      display: grid;
-      grid-template-columns: minmax(260px, 1fr) minmax(340px, 520px);
-      gap: 24px;
-      align-items: end;
-      padding: 18px 0 22px;
-      border-bottom: 1px solid rgba(23, 32, 31, .18);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(248, 243, 234, .88);
+      border-bottom: 1px solid rgba(29, 47, 50, .16);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav {
+      display: flex;
+      min-height: 72px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
     }
 
     .brand {
-      display: flex;
-      gap: 14px;
+      display: inline-flex;
       align-items: center;
+      gap: 12px;
+      font-weight: 900;
     }
 
-    .brand-mark {
+    .mark {
       display: grid;
-      width: 54px;
-      height: 54px;
+      width: 40px;
+      height: 40px;
       place-items: center;
-      color: #fff;
-      background: var(--green-deep);
-      border: 1px solid rgba(255, 255, 255, .45);
+      color: var(--surface);
+      background: var(--ink);
       border-radius: var(--radius);
-      box-shadow: 8px 8px 0 rgba(218, 101, 77, .24);
+      box-shadow: 5px 5px 0 var(--sun);
+    }
+
+    .links {
+      display: flex;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .links a:hover {
+      color: var(--ink);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(330px, .98fr);
+      min-height: calc(100dvh - 72px);
+      gap: 56px;
+      align-items: center;
+      padding: 46px 0 58px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: #406b52;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 34px;
+      height: 2px;
+      background: var(--leaf);
+      content: "";
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
     }
 
     h1 {
-      margin: 0;
-      font-family: "Newsreader", Georgia, serif;
-      font-size: clamp(36px, 5vw, 72px);
-      line-height: .9;
+      max-width: 760px;
+      margin-bottom: 0;
+      font-size: clamp(48px, 7.5vw, 106px);
+      line-height: .94;
       letter-spacing: 0;
     }
 
-    .subtitle {
-      margin: 10px 0 0;
-      max-width: 650px;
+    .hero-copy {
+      max-width: 610px;
+      margin: 24px 0 0;
       color: var(--muted);
-      font-size: 15px;
-      line-height: 1.7;
+      font-size: clamp(17px, 2vw, 21px);
+      line-height: 1.75;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 50px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      border: 1px solid var(--ink);
+      border-radius: var(--radius);
+      font-weight: 900;
+      transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+      white-space: nowrap;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button.primary {
+      color: var(--surface);
+      background: var(--ink);
+      box-shadow: 6px 6px 0 var(--coral);
+    }
+
+    .button.secondary {
+      background: rgba(255, 253, 247, .78);
+    }
+
+    .visual {
+      position: relative;
+      min-height: 580px;
+      border: 1px solid var(--ink);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 26% 22%, var(--sun) 0 13%, transparent 14%),
+        radial-gradient(circle at 68% 26%, var(--coral) 0 8%, transparent 9%),
+        linear-gradient(135deg, transparent 0 46%, rgba(107, 155, 124, .85) 46% 72%, transparent 72%),
+        var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .visual::before {
+      position: absolute;
+      inset: 80px auto auto 54px;
+      width: 250px;
+      height: 340px;
+      border: 1px solid rgba(29, 47, 50, .24);
+      border-radius: 140px 140px 16px 16px;
+      background:
+        linear-gradient(160deg, transparent 0 45%, rgba(255, 216, 107, .8) 45% 56%, transparent 56%),
+        var(--sky);
+      content: "";
+      transform: rotate(-7deg);
+    }
+
+    .visual::after {
+      position: absolute;
+      right: -40px;
+      bottom: -48px;
+      width: 340px;
+      height: 340px;
+      border: 1px solid rgba(29, 47, 50, .22);
+      border-radius: 50%;
+      background: rgba(29, 47, 50, .92);
+      content: "";
+    }
+
+    .visual-card {
+      position: absolute;
+      z-index: 2;
+      right: 28px;
+      bottom: 28px;
+      left: 28px;
+      padding: 24px;
+      border: 1px solid rgba(29, 47, 50, .28);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 247, .9);
+      backdrop-filter: blur(14px);
+    }
+
+    .visual-card strong {
+      display: block;
+      font-size: 29px;
+      line-height: 1.2;
+    }
+
+    .visual-card span {
+      display: block;
+      margin-top: 12px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .stats-band {
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      background: var(--surface);
     }
 
     .stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      overflow: hidden;
-      background: rgba(255, 252, 244, .78);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
     }
 
     .stat {
-      min-width: 0;
-      padding: 18px;
+      padding: 24px;
       border-right: 1px solid var(--line);
     }
 
@@ -128,9 +277,9 @@
       border-right: 0;
     }
 
-    .stat strong {
+    .stat b {
       display: block;
-      font-size: 26px;
+      font-size: clamp(30px, 4vw, 54px);
       line-height: 1;
     }
 
@@ -138,575 +287,263 @@
       display: block;
       margin-top: 8px;
       color: var(--muted);
-      font-size: 12px;
-      white-space: nowrap;
+      font-size: 14px;
+      font-weight: 800;
     }
 
-    .workspace {
+    section {
+      padding: 94px 0;
+    }
+
+    .section-head {
       display: grid;
-      grid-template-columns: 365px minmax(0, 1fr);
-      gap: 22px;
-      margin-top: 22px;
-      align-items: start;
+      grid-template-columns: minmax(0, .72fr) minmax(260px, .28fr);
+      gap: 36px;
+      align-items: end;
+      margin-bottom: 38px;
     }
 
-    .panel,
-    .toolbar {
-      background: rgba(255, 252, 244, .86);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
+    h2 {
+      margin-bottom: 0;
+      font-size: clamp(38px, 5vw, 72px);
+      line-height: .98;
+      letter-spacing: 0;
+    }
+
+    .section-note {
+      margin-bottom: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(320px, 1.1fr);
+      gap: 20px;
     }
 
     .panel {
-      position: sticky;
-      top: 18px;
-      padding: 18px;
-    }
-
-    .panel h2,
-    .library-head h2 {
-      margin: 0;
-      font-size: 15px;
-      font-weight: 700;
-    }
-
-    .form-grid {
-      display: grid;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    label {
-      display: grid;
-      gap: 7px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      min-width: 0;
-      color: var(--ink);
-      background: #fffdf7;
-      border: 1px solid #cbd4cc;
-      border-radius: var(--radius);
-      outline: 0;
-      transition: border .16s ease, box-shadow .16s ease, background .16s ease;
-    }
-
-    input,
-    select {
-      height: 44px;
-      padding: 0 12px;
-    }
-
-    textarea {
-      min-height: 86px;
-      padding: 11px 12px;
-      resize: vertical;
-      line-height: 1.5;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      background: #fff;
-      border-color: var(--green);
-      box-shadow: 0 0 0 4px rgba(37, 106, 79, .12);
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .primary,
-    .ghost,
-    .icon-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-height: 42px;
-      border-radius: var(--radius);
-      border: 1px solid transparent;
-      font-weight: 700;
-      transition: transform .16s ease, background .16s ease, border .16s ease;
-    }
-
-    .primary {
-      width: 100%;
-      color: #fff;
-      background: var(--green-deep);
-      box-shadow: 0 8px 0 rgba(17, 63, 50, .18);
-    }
-
-    .primary:hover,
-    .ghost:hover,
-    .icon-button:hover {
-      transform: translateY(-1px);
-    }
-
-    .ghost,
-    .icon-button {
-      color: var(--ink);
-      background: #fffdf7;
-      border-color: var(--line);
-    }
-
-    .utility-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .import-input {
-      display: none;
-    }
-
-    .sync-box {
-      display: grid;
-      gap: 10px;
-      margin-top: 18px;
-      padding: 14px;
-      background: #f0ebe0;
+      padding: 32px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
+      background: rgba(255, 253, 247, .8);
     }
 
-    .sync-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+    .panel h3 {
+      margin-bottom: 14px;
+      font-size: 23px;
     }
 
-    .sync-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+    .panel p {
+      margin-bottom: 0;
       color: var(--muted);
-      font-size: 12px;
-      font-weight: 700;
-      white-space: nowrap;
+      font-size: 17px;
+      line-height: 1.82;
     }
 
-    .sync-status::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      background: var(--gold);
-      border-radius: 999px;
-    }
-
-    .sync-status.online::before {
-      background: var(--green);
-    }
-
-    .sync-status.error::before {
-      background: var(--coral);
-    }
-
-    .category-editor {
-      margin-top: 18px;
-      padding-top: 17px;
-      border-top: 1px solid var(--line);
-    }
-
-    .category-list {
+    .tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
+      gap: 10px;
+      margin-top: 24px;
     }
 
     .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      max-width: 100%;
-      padding: 7px 9px;
-      color: var(--ink);
-      background: #fffdf7;
+      padding: 9px 12px;
       border: 1px solid var(--line);
       border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .tag button {
-      display: grid;
-      width: 18px;
-      height: 18px;
-      place-items: center;
-      padding: 0;
-      color: var(--muted);
-      background: transparent;
-      border: 0;
-    }
-
-    .library {
-      min-width: 0;
-    }
-
-    .toolbar {
-      display: grid;
-      grid-template-columns: minmax(180px, 1fr) auto auto;
-      gap: 12px;
-      align-items: center;
-      padding: 14px;
-    }
-
-    .search-wrap {
-      position: relative;
-    }
-
-    .search-wrap i {
-      position: absolute;
-      top: 50%;
-      left: 12px;
-      width: 18px;
-      height: 18px;
-      color: var(--muted);
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-
-    .search-wrap input {
-      padding-left: 40px;
-    }
-
-    .segmented {
-      display: inline-grid;
-      grid-auto-flow: column;
-      padding: 4px;
-      background: #ece7dc;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-    }
-
-    .segmented button {
-      min-width: 90px;
-      height: 34px;
-      padding: 0 10px;
-      color: var(--muted);
-      background: transparent;
-      border: 0;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .segmented button.active {
-      color: #fff;
-      background: var(--green-deep);
-    }
-
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding: 18px 2px 14px;
-    }
-
-    .filter-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-height: 36px;
-      padding: 0 12px;
-      color: var(--ink);
-      background: rgba(255, 252, 244, .7);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .filter-chip.active {
-      color: #fff;
-      background: var(--green);
-      border-color: var(--green);
-    }
-
-    .count-dot {
-      display: grid;
-      min-width: 22px;
-      height: 22px;
-      padding: 0 6px;
-      place-items: center;
-      color: inherit;
-      background: rgba(255, 255, 255, .22);
-      border: 1px solid rgba(23, 32, 31, .12);
-      border-radius: 999px;
-      font-size: 11px;
-    }
-
-    .library-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin: 4px 0 12px;
-    }
-
-    .view-note {
-      color: var(--muted);
-      font-size: 13px;
-      white-space: nowrap;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .link-card {
-      display: grid;
-      min-width: 0;
-      overflow: hidden;
       background: var(--surface);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .works {
+      display: grid;
+      gap: 18px;
+    }
+
+    .work {
+      display: grid;
+      grid-template-columns: 190px minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: center;
+      padding: 24px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      box-shadow: 0 12px 28px rgba(28, 35, 31, .08);
-      transition: transform .18s ease, box-shadow .18s ease, border .18s ease;
+      background: rgba(255, 253, 247, .84);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
     }
 
-    .link-card:hover {
+    .work:hover {
+      border-color: var(--ink);
+      box-shadow: 10px 10px 0 rgba(239, 114, 92, .2);
       transform: translateY(-3px);
-      border-color: rgba(37, 106, 79, .48);
-      box-shadow: 0 18px 40px rgba(28, 35, 31, .12);
     }
 
-    .thumb {
-      position: relative;
-      aspect-ratio: 1.55;
-      overflow: hidden;
-      background: linear-gradient(135deg, rgba(37, 106, 79, .16), rgba(218, 101, 77, .13)), #ebe5d7;
-      border-bottom: 1px solid var(--line);
+    .work-visual {
+      min-height: 136px;
+      border: 1px solid rgba(29, 47, 50, .18);
+      border-radius: var(--radius);
+      background:
+        radial-gradient(circle at 34% 34%, var(--sun) 0 20%, transparent 21%),
+        linear-gradient(135deg, var(--sky), var(--leaf));
     }
 
-    .thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      background: #eee7d9;
+    .work:nth-child(2) .work-visual {
+      background:
+        repeating-linear-gradient(90deg, rgba(29, 47, 50, .11) 0 1px, transparent 1px 18px),
+        linear-gradient(135deg, var(--coral), var(--surface) 64%);
     }
 
-    .thumb-fallback {
-      position: absolute;
-      inset: 0;
+    .work:nth-child(3) .work-visual {
+      background:
+        radial-gradient(circle at 72% 30%, var(--coral) 0 16%, transparent 17%),
+        linear-gradient(135deg, var(--deep) 0 42%, var(--sun) 42% 58%, var(--surface) 58%);
+    }
+
+    .kicker {
+      color: #406b52;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .work h3 {
+      margin: 8px 0 10px;
+      font-size: clamp(24px, 3vw, 38px);
+      line-height: 1.1;
+    }
+
+    .work p {
+      max-width: 720px;
+      margin-bottom: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .arrow {
       display: grid;
+      width: 48px;
+      height: 48px;
       place-items: center;
-      padding: 22px;
-      text-align: center;
-      color: var(--green-deep);
-      font-family: "Newsreader", Georgia, serif;
-      font-size: 30px;
-      line-height: 1;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      font-size: 25px;
+      font-weight: 900;
     }
 
-    .card-body {
+    .contact {
+      display: grid;
+      grid-template-columns: minmax(0, .85fr) minmax(320px, .15fr);
+      gap: 30px;
+      align-items: end;
+      padding: 52px;
+      border: 1px solid var(--ink);
+      border-radius: var(--radius);
+      background: var(--ink);
+      color: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .contact h2 {
+      max-width: 790px;
+    }
+
+    .contact p {
+      max-width: 650px;
+      margin: 20px 0 0;
+      color: rgba(255, 253, 247, .74);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .contact-list {
       display: grid;
       gap: 10px;
-      padding: 14px;
+      min-width: 285px;
     }
 
-    .meta {
+    .contact-link {
+      display: flex;
+      min-height: 52px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 16px;
+      border: 1px solid rgba(255, 253, 247, .28);
+      border-radius: var(--radius);
+      color: var(--surface);
+      font-weight: 900;
+    }
+
+    .contact-link:hover {
+      background: rgba(255, 253, 247, .1);
+    }
+
+    footer {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-
-    .category-pill {
-      max-width: 65%;
-      overflow: hidden;
-      color: #fff;
-      background: var(--blue);
-      border-radius: 999px;
-      padding: 5px 8px;
-      font-size: 11px;
-      font-weight: 700;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .date {
+      gap: 20px;
+      padding: 28px 0 42px;
       color: var(--muted);
-      font-size: 11px;
-      white-space: nowrap;
+      font-size: 14px;
+      font-weight: 800;
     }
 
-    .card-title {
-      display: -webkit-box;
-      min-height: 52px;
-      margin: 0;
-      overflow: hidden;
-      font-size: 18px;
-      line-height: 1.42;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-
-    .desc {
-      display: -webkit-box;
-      min-height: 40px;
-      margin: 0;
-      overflow: hidden;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-
-    .url-line {
-      overflow: hidden;
-      color: var(--green);
-      font-size: 12px;
-      font-weight: 700;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .actions {
-      display: grid;
-      grid-template-columns: 1fr 42px 42px;
-      gap: 8px;
-      margin-top: 2px;
-    }
-
-    .actions a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-width: 0;
-      min-height: 40px;
-      padding: 0 10px;
-      color: #fff;
-      background: var(--green-deep);
-      border-radius: var(--radius);
-      font-size: 13px;
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .icon-button {
-      width: 42px;
-      height: 40px;
-      min-height: 40px;
-      padding: 0;
-    }
-
-    .empty {
-      display: none;
-      padding: 56px 24px;
-      text-align: center;
-      background: rgba(255, 252, 244, .72);
-      border: 1px dashed #bfc8c0;
-      border-radius: var(--radius);
-    }
-
-    .empty.show {
-      display: block;
-    }
-
-    .empty strong {
-      display: block;
-      font-family: "Newsreader", Georgia, serif;
-      font-size: 34px;
-      line-height: 1;
-    }
-
-    .empty span {
-      display: block;
-      margin-top: 12px;
-      color: var(--muted);
-    }
-
-    .toast {
-      position: fixed;
-      right: 22px;
-      bottom: 22px;
-      z-index: 10;
-      max-width: min(420px, calc(100vw - 44px));
-      padding: 13px 15px;
-      color: #fff;
-      background: var(--green-deep);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity .2s ease, transform .2s ease;
-      pointer-events: none;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    @media (max-width: 1120px) {
-      .cards {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 880px) {
-      .app {
-        width: min(100% - 22px, 760px);
-        padding-top: 14px;
-      }
-
-      .topbar,
-      .workspace,
-      .toolbar {
-        grid-template-columns: 1fr;
-      }
-
-      .panel {
+    @media (max-width: 900px) {
+      .topbar {
         position: static;
       }
 
-      .toolbar {
-        gap: 10px;
+      .links {
+        gap: 12px;
+        font-size: 13px;
       }
 
-      .segmented {
-        width: 100%;
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .cards {
+      .hero,
+      .about-grid,
+      .section-head,
+      .contact {
         grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .visual {
+        min-height: 460px;
+      }
+
+      .work {
+        grid-template-columns: 1fr;
+      }
+
+      .arrow {
+        display: none;
       }
     }
 
-    @media (max-width: 560px) {
-      .brand {
-        align-items: flex-start;
+    @media (max-width: 620px) {
+      .shell {
+        width: min(100vw - 24px, 1180px);
       }
 
-      .brand-mark {
-        width: 46px;
-        height: 46px;
+      .links a:not(.keep) {
+        display: none;
       }
 
-      .stats,
-      .row,
-      .utility-row {
+      .hero {
+        padding-top: 34px;
+      }
+
+      h1 {
+        font-size: clamp(44px, 14vw, 72px);
+      }
+
+      .stats {
         grid-template-columns: 1fr;
       }
 
@@ -718,579 +555,170 @@
       .stat:last-child {
         border-bottom: 0;
       }
+
+      section {
+        padding: 68px 0;
+      }
+
+      .panel,
+      .work,
+      .contact {
+        padding: 22px;
+      }
+
+      .contact-link {
+        display: grid;
+        justify-content: stretch;
+      }
+
+      footer {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
 <body>
-  <main class="app">
-    <section class="topbar">
+  <header class="topbar">
+    <div class="shell nav">
+      <a class="brand" href="#top" aria-label="回到首頁">
+        <span class="mark">L</span>
+        <span>Lemon water Lin</span>
+      </a>
+      <nav class="links" aria-label="主要導覽">
+        <a href="#about">自我介紹</a>
+        <a href="#work">代表作品</a>
+        <a class="keep" href="#contact">聯絡</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="shell hero" aria-labelledby="hero-title">
       <div>
-        <div class="brand">
-          <div class="brand-mark" aria-hidden="true"><i data-lucide="archive"></i></div>
-          <div>
-            <h1>Link Vault</h1>
-            <p class="subtitle">把 AI 資訊、美食口袋名單、生活靈感和學習資料收在同一個地方。依新增時間排序，也能用分類快速翻找。</p>
-          </div>
+        <div class="eyebrow">Visual designer in Taiwan</div>
+        <h1 id="hero-title">把生活裡的細節，畫成被看見的主視覺。</h1>
+        <p class="hero-copy">我是 Lemon water Lin，視覺設計師。留心觀察生活細微小事，將靈感轉化為插畫、海報、品牌與銷售頁視覺。</p>
+        <div class="actions">
+          <a class="button primary" href="#work">看作品</a>
+          <a class="button secondary" href="https://www.behance.net/kkkomo2102" target="_blank" rel="noreferrer">Behance</a>
         </div>
       </div>
-      <div class="stats" aria-label="資料統計">
-        <div class="stat"><strong id="statTotal">0</strong><span>已收藏連結</span></div>
-        <div class="stat"><strong id="statCategory">0</strong><span>目前分類數</span></div>
-        <div class="stat"><strong id="statLatest">--</strong><span>最後新增</span></div>
+
+      <div class="visual" aria-label="Lemon water Lin 作品集主視覺">
+        <div class="visual-card">
+          <strong>Illustration, key visual, poster and product page design.</strong>
+          <span>用溫度、色彩與敘事感，讓品牌訊息變得更容易被理解與記住。</span>
+        </div>
       </div>
     </section>
 
-    <section class="workspace">
-      <aside class="panel">
-        <h2 id="formTitle">新增資訊連結</h2>
-        <form class="form-grid" id="linkForm">
-          <input type="hidden" id="editId">
-          <label>
-            連結網址
-            <input id="urlInput" type="url" placeholder="https://example.com/article" required>
-          </label>
-          <label>
-            標題
-            <input id="titleInput" type="text" placeholder="例如：OpenAI 新工具整理">
-          </label>
-          <div class="row">
-            <label>
-              分類
-              <select id="categoryInput"></select>
-            </label>
-            <label>
-              新增時間
-              <input id="dateInput" type="datetime-local">
-            </label>
-          </div>
-          <label>
-            縮圖網址
-            <input id="thumbInput" type="url" placeholder="可留空，自動抓網站截圖">
-          </label>
-          <label>
-            備註
-            <textarea id="noteInput" placeholder="寫下你為什麼想保存這個連結"></textarea>
-          </label>
-          <button class="primary" type="submit"><i data-lucide="plus"></i><span id="submitLabel">加入收藏</span></button>
-          <button class="ghost" type="button" id="cancelEdit" hidden><i data-lucide="x"></i>取消編輯</button>
-        </form>
-
-        <div class="utility-row">
-          <button class="ghost" type="button" id="exportBtn"><i data-lucide="download"></i>匯出</button>
-          <label class="ghost" for="importFile"><i data-lucide="upload"></i>匯入</label>
-          <input class="import-input" id="importFile" type="file" accept="application/json">
+    <div class="stats-band" aria-label="Behance 公開資料摘要">
+      <div class="shell stats">
+        <div class="stat">
+          <b>3,897</b>
+          <span>Project Views on Behance</span>
         </div>
-
-        <div class="sync-box">
-          <div class="sync-head">
-            <h2>Google Sheet 同步</h2>
-            <span class="sync-status" id="syncStatus">未設定</span>
-          </div>
-          <label>
-            Apps Script Web App URL
-            <input id="scriptUrlInput" type="url" placeholder="https://script.google.com/macros/s/.../exec">
-          </label>
-          <div class="utility-row" style="margin-top: 0;">
-            <button class="ghost" type="button" id="saveScriptUrlBtn"><i data-lucide="save"></i>儲存</button>
-            <button class="ghost" type="button" id="syncNowBtn"><i data-lucide="refresh-cw"></i>同步</button>
-          </div>
+        <div class="stat">
+          <b>121</b>
+          <span>Appreciations</span>
         </div>
+        <div class="stat">
+          <b>2017</b>
+          <span>Behance Member Since</span>
+        </div>
+      </div>
+    </div>
 
-        <div class="category-editor">
-          <h2>分類管理</h2>
-          <div class="row" style="margin-top: 12px;">
-            <input id="newCategoryInput" type="text" placeholder="新增分類名稱">
-            <button class="ghost" type="button" id="addCategoryBtn"><i data-lucide="folder-plus"></i>新增</button>
+    <section id="about" class="shell" aria-labelledby="about-title">
+      <div class="section-head">
+        <h2 id="about-title">自我介紹</h2>
+        <p class="section-note">Available for Freelance，服務地點以台灣為主，也可遠端合作。</p>
+      </div>
+      <div class="about-grid">
+        <article class="panel">
+          <h3>關於我</h3>
+          <p>留心觀察一切生活細微小事，靈感來自那裏。擅長把活動主題、品牌訊息或商品特色轉成有記憶點的視覺語言。</p>
+        </article>
+        <article class="panel">
+          <h3>設計服務</h3>
+          <p>可協助主視覺插畫、海報設計、節慶賀卡、衛教視覺、商品銷售頁與品牌延伸視覺，讓不同內容都能擁有清楚的畫面焦點。</p>
+          <div class="tags" aria-label="服務項目">
+            <span class="tag">主視覺插畫</span>
+            <span class="tag">海報設計</span>
+            <span class="tag">品牌視覺</span>
+            <span class="tag">商品頁設計</span>
+            <span class="tag">衛教視覺</span>
+            <span class="tag">節慶賀卡</span>
           </div>
-          <div class="category-list" id="categoryList"></div>
-        </div>
-      </aside>
+        </article>
+      </div>
+    </section>
 
-      <section class="library">
-        <div class="toolbar">
-          <div class="search-wrap">
-            <i data-lucide="search"></i>
-            <input id="searchInput" type="search" placeholder="搜尋標題、網址或備註">
+    <section id="work" class="shell" aria-labelledby="work-title">
+      <div class="section-head">
+        <h2 id="work-title">三個代表作品</h2>
+        <p class="section-note">依你的 Behance 作品整理成三個展示方向，點擊可前往完整 Behance 頁面。</p>
+      </div>
+      <div class="works">
+        <a class="work" href="https://www.behance.net/kkkomo2102" target="_blank" rel="noreferrer">
+          <div class="work-visual" aria-hidden="true"></div>
+          <div>
+            <div class="kicker">01 / Key Visual</div>
+            <h3>海好有你 竹來守護 視覺設計</h3>
+            <p>以海洋守護與公益倡議為主題，透過明確的插畫語彙與活動視覺，建立溫暖且有行動感的溝通畫面。</p>
           </div>
-          <div class="segmented" aria-label="時間排序">
-            <button type="button" class="active" data-sort="desc">最新優先</button>
-            <button type="button" data-sort="asc">最舊優先</button>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a class="work" href="https://www.behance.net/kkkomo2102" target="_blank" rel="noreferrer">
+          <div class="work-visual" aria-hidden="true"></div>
+          <div>
+            <div class="kicker">02 / Illustration</div>
+            <h3>原能插畫主視覺</h3>
+            <p>以插畫建立主題辨識度，將抽象概念轉成具親和力的圖像系統，適合活動宣傳、社群延伸與品牌溝通。</p>
           </div>
-          <button class="ghost" type="button" id="clearFilters"><i data-lucide="rotate-ccw"></i>重置</button>
-        </div>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
 
-        <div class="filters" id="filters"></div>
+        <a class="work" href="https://www.behance.net/kkkomo2102" target="_blank" rel="noreferrer">
+          <div class="work-visual" aria-hidden="true"></div>
+          <div>
+            <div class="kicker">03 / Commerce Visual</div>
+            <h3>商品銷售頁視覺設計</h3>
+            <p>整理商品賣點、視覺節奏與購買情境，讓銷售頁不只好看，也能幫助使用者更快理解產品價值。</p>
+          </div>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </section>
 
-        <div class="library-head">
-          <h2>連結資料庫</h2>
-          <span class="view-note" id="viewNote">顯示 0 筆</span>
+    <section id="contact" class="shell" aria-labelledby="contact-title">
+      <div class="contact">
+        <div>
+          <h2 id="contact-title">需要主視覺、插畫或商品頁設計，歡迎聯絡。</h2>
+          <p>可先提供需求、時程與想呈現的作品風格，我會協助整理適合的視覺方向。</p>
         </div>
-        <div class="cards" id="cards"></div>
-        <div class="empty" id="emptyState">
-          <strong>還沒有符合條件的連結</strong>
-          <span>新增一個網址，或切換分類和搜尋條件。</span>
+        <div class="contact-list">
+          <a class="contact-link" href="mailto:komo2102@gmail.com">
+            <span>Email</span>
+            <span>komo2102@gmail.com</span>
+          </a>
+          <a class="contact-link" href="https://line.me/ti/p/~komo2102" target="_blank" rel="noreferrer">
+            <span>LINE</span>
+            <span>komo2102</span>
+          </a>
+          <a class="contact-link" href="https://www.behance.net/kkkomo2102" target="_blank" rel="noreferrer">
+            <span>Behance</span>
+            <span>kkkomo2102</span>
+          </a>
         </div>
-      </section>
+      </div>
     </section>
   </main>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <script>
-    const STORE_KEY = "link-vault-items-v1";
-    const CATEGORY_KEY = "link-vault-categories-v1";
-    const SCRIPT_URL_KEY = "link-vault-apps-script-url-v1";
-    const SHEET_ID = "1robxjndv0LbaLMc2-OPVhkSFmr9tY3yLkfYHoKNJP6g";
-    const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
-    const defaultCategories = ["AI資訊", "美食", "生活", "學習"];
-
-    let items = loadJson(STORE_KEY, []);
-    let categories = loadJson(CATEGORY_KEY, defaultCategories);
-    let scriptUrl = localStorage.getItem(SCRIPT_URL_KEY) || "";
-    let activeCategory = "全部";
-    let sortDirection = "desc";
-
-    const $ = (selector) => document.querySelector(selector);
-    const elements = {
-      form: $("#linkForm"),
-      editId: $("#editId"),
-      formTitle: $("#formTitle"),
-      submitLabel: $("#submitLabel"),
-      cancelEdit: $("#cancelEdit"),
-      url: $("#urlInput"),
-      title: $("#titleInput"),
-      category: $("#categoryInput"),
-      date: $("#dateInput"),
-      thumb: $("#thumbInput"),
-      note: $("#noteInput"),
-      cards: $("#cards"),
-      filters: $("#filters"),
-      categoryList: $("#categoryList"),
-      scriptUrl: $("#scriptUrlInput"),
-      syncStatus: $("#syncStatus"),
-      search: $("#searchInput"),
-      viewNote: $("#viewNote"),
-      empty: $("#emptyState"),
-      toast: $("#toast")
-    };
-
-    function loadJson(key, fallback) {
-      try {
-        const value = localStorage.getItem(key);
-        return value ? JSON.parse(value) : fallback;
-      } catch (error) {
-        return fallback;
-      }
-    }
-
-    function save() {
-      localStorage.setItem(STORE_KEY, JSON.stringify(items));
-      localStorage.setItem(CATEGORY_KEY, JSON.stringify(categories));
-    }
-
-    function setSyncStatus(message, state = "") {
-      elements.syncStatus.textContent = message;
-      elements.syncStatus.className = `sync-status ${state}`.trim();
-    }
-
-    function csvToRows(text) {
-      const rows = [];
-      let row = [];
-      let value = "";
-      let quoted = false;
-      for (let i = 0; i < text.length; i += 1) {
-        const char = text[i];
-        const next = text[i + 1];
-        if (char === '"' && quoted && next === '"') {
-          value += '"';
-          i += 1;
-        } else if (char === '"') {
-          quoted = !quoted;
-        } else if (char === "," && !quoted) {
-          row.push(value);
-          value = "";
-        } else if ((char === "\n" || char === "\r") && !quoted) {
-          if (char === "\r" && next === "\n") i += 1;
-          row.push(value);
-          if (row.some((cell) => cell !== "")) rows.push(row);
-          row = [];
-          value = "";
-        } else {
-          value += char;
-        }
-      }
-      row.push(value);
-      if (row.some((cell) => cell !== "")) rows.push(row);
-      return rows;
-    }
-
-    function normalizeSheetRow(row, index) {
-      const id = row.ID || row.id || row.Id || crypto.randomUUID();
-      const url = normalizeUrl(row.URL || row.url || "");
-      if (!url) return null;
-      return {
-        id,
-        createdAt: row["Created At"] || row.createdAt || row.created || new Date().toISOString(),
-        updatedAt: row["Updated At"] || row.updatedAt || "",
-        title: row.Title || row.title || safeHost(url) || `連結 ${index + 1}`,
-        url,
-        category: row.Category || row.category || "AI資訊",
-        note: row.Note || row.note || "",
-        thumb: row.Thumbnail || row.thumbnail || row.thumb || "",
-        host: row.Host || row.host || safeHost(url)
-      };
-    }
-
-    async function loadFromSheet() {
-      setSyncStatus("讀取中", "");
-      try {
-        const response = await fetch(`${CSV_URL}&cacheBust=${Date.now()}`);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const rows = csvToRows(await response.text());
-        if (!rows.length) {
-          setSyncStatus(scriptUrl ? "已連線" : "未設定", scriptUrl ? "online" : "");
-          renderAll();
-          return;
-        }
-        const headers = rows[0].map((header) => header.trim());
-        const nextItems = rows.slice(1)
-          .map((row, index) => Object.fromEntries(headers.map((header, column) => [header, row[column] || ""])))
-          .map(normalizeSheetRow)
-          .filter(Boolean);
-        if (nextItems.length) {
-          items = nextItems;
-          categories = Array.from(new Set([...defaultCategories, ...items.map((item) => item.category).filter(Boolean)]));
-          save();
-        }
-        setSyncStatus(scriptUrl ? "已連線" : "未設定", scriptUrl ? "online" : "");
-        renderAll();
-      } catch (error) {
-        setSyncStatus("讀取失敗", "error");
-        showToast("讀取 Google Sheet 失敗，先顯示本機資料");
-        renderAll();
-      }
-    }
-
-    async function writeToSheet(action, item) {
-      if (!scriptUrl) {
-        setSyncStatus("未設定", "");
-        showToast("尚未設定 Apps Script URL，已先存到本機");
-        return false;
-      }
-      setSyncStatus("同步中", "");
-      try {
-        await fetch(scriptUrl, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ action, item })
-        });
-        setSyncStatus("已同步", "online");
-        return true;
-      } catch (error) {
-        setSyncStatus("同步失敗", "error");
-        showToast("同步到 Google Sheet 失敗，資料已保留在本機");
-        return false;
-      }
-    }
-
-    function normalizeUrl(value) {
-      const trimmed = value.trim();
-      if (!trimmed) return "";
-      return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
-    }
-
-    function safeHost(url) {
-      try {
-        return new URL(url).hostname.replace(/^www\./, "");
-      } catch (error) {
-        return url;
-      }
-    }
-
-    function thumbnailFor(item) {
-      if (item.thumb) return item.thumb;
-      return `https://image.thum.io/get/width/900/crop/580/noanimate/${encodeURIComponent(item.url)}`;
-    }
-
-    function initials(text) {
-      return (text || "LINK").trim().slice(0, 2).toUpperCase();
-    }
-
-    function formatDate(value) {
-      return new Intl.DateTimeFormat("zh-TW", {
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit"
-      }).format(new Date(value));
-    }
-
-    function toLocalInputValue(date) {
-      const d = date ? new Date(date) : new Date();
-      const offset = d.getTimezoneOffset();
-      return new Date(d.getTime() - offset * 60000).toISOString().slice(0, 16);
-    }
-
-    function showToast(message) {
-      elements.toast.textContent = message;
-      elements.toast.classList.add("show");
-      clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => elements.toast.classList.remove("show"), 2200);
-    }
-
-    function renderCategoryInputs() {
-      elements.category.innerHTML = categories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("");
-      elements.categoryList.innerHTML = categories.map((category) => `
-        <span class="tag">${escapeHtml(category)}<button type="button" title="刪除分類" data-remove-category="${escapeHtml(category)}"><i data-lucide="x"></i></button></span>
-      `).join("");
-      lucide.createIcons();
-    }
-
-    function renderFilters() {
-      const counts = items.reduce((acc, item) => {
-        acc[item.category] = (acc[item.category] || 0) + 1;
-        return acc;
-      }, {});
-      const all = [{ name: "全部", count: items.length }, ...categories.map((name) => ({ name, count: counts[name] || 0 }))];
-      elements.filters.innerHTML = all.map(({ name, count }) => `
-        <button class="filter-chip ${activeCategory === name ? "active" : ""}" type="button" data-filter="${escapeHtml(name)}">
-          ${escapeHtml(name)}<span class="count-dot">${count}</span>
-        </button>
-      `).join("");
-    }
-
-    function filteredItems() {
-      const keyword = elements.search.value.trim().toLowerCase();
-      return items
-        .filter((item) => activeCategory === "全部" || item.category === activeCategory)
-        .filter((item) => {
-          if (!keyword) return true;
-          return [item.title, item.url, item.note, item.category, safeHost(item.url)]
-            .join(" ")
-            .toLowerCase()
-            .includes(keyword);
-        })
-        .sort((a, b) => {
-          const diff = new Date(a.createdAt) - new Date(b.createdAt);
-          return sortDirection === "asc" ? diff : -diff;
-        });
-    }
-
-    function renderCards() {
-      const visible = filteredItems();
-      elements.cards.innerHTML = visible.map((item) => `
-        <article class="link-card">
-          <div class="thumb">
-            <div class="thumb-fallback">${initials(item.title || safeHost(item.url))}</div>
-            <img src="${thumbnailFor(item)}" alt="${item.title || safeHost(item.url)} 的縮圖" loading="lazy" onerror="this.style.display='none'">
-          </div>
-          <div class="card-body">
-            <div class="meta">
-              <span class="category-pill">${escapeHtml(item.category)}</span>
-              <span class="date">${formatDate(item.createdAt)}</span>
-            </div>
-            <h3 class="card-title">${escapeHtml(item.title || safeHost(item.url))}</h3>
-            <p class="desc">${escapeHtml(item.note || "尚未加入備註。")}</p>
-            <div class="url-line">${escapeHtml(safeHost(item.url))}</div>
-            <div class="actions">
-              <a href="${item.url}" target="_blank" rel="noreferrer"><i data-lucide="external-link"></i>開啟連結</a>
-              <button class="icon-button" type="button" title="編輯" data-edit="${item.id}"><i data-lucide="pencil"></i></button>
-              <button class="icon-button" type="button" title="刪除" data-delete="${item.id}"><i data-lucide="trash-2"></i></button>
-            </div>
-          </div>
-        </article>
-      `).join("");
-      elements.empty.classList.toggle("show", visible.length === 0);
-      elements.viewNote.textContent = `顯示 ${visible.length} 筆`;
-      $("#statTotal").textContent = items.length;
-      $("#statCategory").textContent = categories.length;
-      $("#statLatest").textContent = items.length ? formatDate(Math.max(...items.map((item) => new Date(item.createdAt)))) : "--";
-      lucide.createIcons();
-    }
-
-    function escapeHtml(value) {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    function renderAll() {
-      renderCategoryInputs();
-      renderFilters();
-      renderCards();
-    }
-
-    function resetForm() {
-      elements.form.reset();
-      elements.editId.value = "";
-      elements.date.value = toLocalInputValue();
-      elements.formTitle.textContent = "新增資訊連結";
-      elements.submitLabel.textContent = "加入收藏";
-      elements.cancelEdit.hidden = true;
-      elements.category.value = categories[0] || "AI資訊";
-    }
-
-    elements.form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const url = normalizeUrl(elements.url.value);
-      const title = elements.title.value.trim() || safeHost(url);
-      const id = elements.editId.value || crypto.randomUUID();
-      const payload = {
-        id,
-        url,
-        title,
-        category: elements.category.value,
-        note: elements.note.value.trim(),
-        thumb: elements.thumb.value.trim(),
-        createdAt: new Date(elements.date.value || Date.now()).toISOString(),
-        updatedAt: new Date().toISOString(),
-        host: safeHost(url)
-      };
-      if (elements.editId.value) {
-        items = items.map((item) => item.id === id ? { ...item, ...payload } : item);
-        showToast("連結已更新");
-      } else {
-        items.unshift(payload);
-        showToast("連結已加入收藏");
-      }
-      save();
-      renderAll();
-      await writeToSheet("upsert", payload);
-      resetForm();
-    });
-
-    elements.cards.addEventListener("click", (event) => {
-      const editButton = event.target.closest("[data-edit]");
-      const deleteButton = event.target.closest("[data-delete]");
-      if (editButton) {
-        const item = items.find((entry) => entry.id === editButton.dataset.edit);
-        if (!item) return;
-        elements.editId.value = item.id;
-        elements.url.value = item.url;
-        elements.title.value = item.title;
-        elements.category.value = item.category;
-        elements.date.value = toLocalInputValue(item.createdAt);
-        elements.thumb.value = item.thumb || "";
-        elements.note.value = item.note || "";
-        elements.formTitle.textContent = "編輯資訊連結";
-        elements.submitLabel.textContent = "儲存修改";
-        elements.cancelEdit.hidden = false;
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-      if (deleteButton) {
-        const item = items.find((entry) => entry.id === deleteButton.dataset.delete);
-        if (!item || !confirm(`刪除「${item.title}」？`)) return;
-        items = items.filter((entry) => entry.id !== item.id);
-        save();
-        renderAll();
-        writeToSheet("delete", item);
-        showToast("連結已刪除");
-      }
-    });
-
-    elements.filters.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-filter]");
-      if (!button) return;
-      activeCategory = button.dataset.filter;
-      renderAll();
-    });
-
-    document.querySelector(".segmented").addEventListener("click", (event) => {
-      const button = event.target.closest("[data-sort]");
-      if (!button) return;
-      sortDirection = button.dataset.sort;
-      document.querySelectorAll("[data-sort]").forEach((item) => item.classList.toggle("active", item === button));
-      renderCards();
-    });
-
-    elements.search.addEventListener("input", renderCards);
-    elements.cancelEdit.addEventListener("click", resetForm);
-
-    $("#clearFilters").addEventListener("click", () => {
-      activeCategory = "全部";
-      elements.search.value = "";
-      sortDirection = "desc";
-      document.querySelectorAll("[data-sort]").forEach((button) => button.classList.toggle("active", button.dataset.sort === "desc"));
-      renderAll();
-    });
-
-    $("#addCategoryBtn").addEventListener("click", () => {
-      const input = $("#newCategoryInput");
-      const name = input.value.trim();
-      if (!name) return;
-      if (categories.includes(name)) {
-        showToast("這個分類已經存在");
-        return;
-      }
-      categories.push(name);
-      input.value = "";
-      save();
-      renderAll();
-      showToast("分類已新增");
-    });
-
-    $("#saveScriptUrlBtn").addEventListener("click", () => {
-      scriptUrl = elements.scriptUrl.value.trim();
-      localStorage.setItem(SCRIPT_URL_KEY, scriptUrl);
-      setSyncStatus(scriptUrl ? "已設定" : "未設定", scriptUrl ? "online" : "");
-      showToast(scriptUrl ? "Apps Script URL 已儲存" : "已清除同步設定");
-    });
-
-    $("#syncNowBtn").addEventListener("click", loadFromSheet);
-
-    elements.categoryList.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-remove-category]");
-      if (!button) return;
-      const name = button.dataset.removeCategory;
-      if (items.some((item) => item.category === name)) {
-        showToast("這個分類仍有連結，請先改分類或刪除連結");
-        return;
-      }
-      categories = categories.filter((category) => category !== name);
-      save();
-      renderAll();
-      resetForm();
-    });
-
-    $("#exportBtn").addEventListener("click", () => {
-      const blob = new Blob([JSON.stringify({ items, categories }, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = `link-vault-${new Date().toISOString().slice(0, 10)}.json`;
-      anchor.click();
-      URL.revokeObjectURL(url);
-      showToast("資料已匯出");
-    });
-
-    $("#importFile").addEventListener("change", async (event) => {
-      const file = event.target.files[0];
-      if (!file) return;
-      try {
-        const data = JSON.parse(await file.text());
-        if (!Array.isArray(data.items) || !Array.isArray(data.categories)) throw new Error("Invalid file");
-        items = data.items;
-        categories = data.categories;
-        save();
-        resetForm();
-        renderAll();
-        showToast("資料已匯入");
-      } catch (error) {
-        showToast("匯入失敗，請確認 JSON 格式");
-      } finally {
-        event.target.value = "";
-      }
-    });
-
-    elements.scriptUrl.value = scriptUrl;
-    if (!categories.length) categories = [...defaultCategories];
-    resetForm();
-    renderAll();
-    loadFromSheet();
-  </script>
+  <footer class="shell">
+    <span>© 2026 Lemon water Lin</span>
+    <span>Visual design portfolio based on Behance.</span>
+  </footer>
 </body>
 </html>
